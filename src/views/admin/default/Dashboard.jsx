@@ -42,7 +42,7 @@ const Dashboard = () => {
       setData(res.data);
 
       if (res.data.totalIncome < 50 && storedUser?.email) {
-        await axios.post("http://localhost:5000/api/notify-low-income", {
+        await axios.post("https://server-personal-income.onrender.com/api/notify-low-income", {
           email: storedUser.email,
           income: res.data.totalIncome,
         });
