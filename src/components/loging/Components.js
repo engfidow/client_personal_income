@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
 background-color: #fff;
 border-radius: 10px;
-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
 position: relative;
 overflow: hidden;
 width: 778px;
@@ -55,6 +55,7 @@ text-align: center;
 export const Title = styled.h1`
 font-weight: bold;
 margin: 0;
+color: green;
 `;
 
 export const Input = styled.input`
@@ -85,9 +86,10 @@ export const Button = styled.button`
    }
 `;
 export const GhostButton = styled(Button)`
-border: 1px solid #ff4b2b;
+border: 1px solid #001297;
 background-color: transparent;
-border-color: #ffffff;
+border-color: #001297;
+color: #001297;
 `;
 
 export const Anchor = styled.a`
@@ -110,7 +112,7 @@ ${props =>
 `;
 
 export const Overlay = styled.div`
-background: #00C957;
+background: #D1F9BE;
 
 background-size: cover;
 background-position: 0 0;
@@ -155,5 +157,6 @@ font-size: 14px;
   font-weight: 100;
   line-height: 20px;
   letter-spacing: 0.5px;
-  margin: 20px 0 30px
+  margin: 20px 0 30px;
+  color: #000;
 `;

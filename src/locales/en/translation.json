@@ -73,5 +73,27 @@
 
   "recent_transactions": "Recent Transactions",
   "monthly_trend": "Monthly Income vs Expense",
-  "category_breakdown": "Expense by Category"
+  "category_breakdown": "Expense by Category",
+
+  "select_category": "Select Category",
+  "no_categories": "No categories found",
+  "please_register_category_first": "Please register a category first",
+  "loading": "Loading",
+
+  "manage_categories": "Manage Categories",
+  "add_category": "Add Category",
+  "edit_category": "Edit Category",
+  
+ 
+  "create": "Create",
+
+  
+  "fetch_error": "Failed to fetch categories",
+  "fill_required_fields": "Please fill all required fields",
+  "create_success": "Category created successfully",
+  "update_success": "Category updated successfully",
+  "save_failed": "Failed to save category",
+  "delete_success": "Category deleted successfully",
+  "delete_failed": "Failed to delete category",
+  "confirm_delete": "Are you sure you want to delete?"
 }

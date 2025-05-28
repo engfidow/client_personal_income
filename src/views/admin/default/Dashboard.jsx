@@ -31,13 +31,24 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
+  const formatCurrency = (value) => `$${parseFloat(value).toFixed(2)}`;
+
   const fetchDashboard = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`https://server-personal-income.onrender.com/api/transactions/dashboard/${userId}`);
+      const res = await axios.get(
+        `https://server-personal-income.onrender.com/api/transactions/dashboard/${userId}`
+      );
       setData(res.data);
+
+      if (res.data.totalIncome < 50 && storedUser?.email) {
+        await axios.post("http://localhost:5000/api/notify-low-income", {
+          email: storedUser.email,
+          income: res.data.totalIncome,
+        });
+      }
     } catch (err) {
-      console.error("Error loading dashboard:", err);
+      console.error("Error loading dashboard or sending alert:", err);
     }
     setLoading(false);
   };
@@ -45,8 +56,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (userId) fetchDashboard();
   }, [userId]);
-
-  const formatCurrency = (value) => `$${parseFloat(value).toFixed(2)}`;
 
   const monthlyLabels = [...new Set(data.monthlyChartData.map((d) => d.month))];
 
@@ -96,7 +105,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 text-navy-700 dark:text-white">
-      <h1 className="text-2xl font-bold mb-4">{t("dashboard")}</h1>
+     
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -136,8 +145,13 @@ const Dashboard = () => {
             {data.recentTransactions.map((tx) => (
               <li key={tx.id} className="flex justify-between border-b dark:border-white/10 pb-1">
                 <span>{tx.category}</span>
-                <span className={`font-bold ${tx.type === "income" ? "text-green-600" : "text-red-600"}`}>
-                  {tx.type === "income" ? "+" : "-"}{formatCurrency(tx.amount)}
+                <span
+                  className={`font-bold ${
+                    tx.type === "income" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {tx.type === "income" ? "+" : "-"}
+                  {formatCurrency(tx.amount)}
                 </span>
               </li>
             ))}

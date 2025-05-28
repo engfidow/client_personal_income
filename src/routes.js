@@ -5,7 +5,8 @@
 import ForgotPassword from "components/loging/ForgotPassword";
 import Login from "components/loging/Login";
 import React from "react";
-import { MdHome, MdOutlineShoppingCart, MdBarChart, MdLock, MdMoney, MdMoneyOffCsred } from "react-icons/md";
+import { MdHome, MdOutlineShoppingCart, MdBarChart, MdLock, MdMoney, MdMoneyOffCsred, MdCategory } from "react-icons/md";
+import CategoryManagement from "views/admin/categories/CategoryManagement";
 import Dashboard from "views/admin/default/Dashboard";
 import Expense from "views/admin/expense/Expense";
 import Income from "views/admin/income/Income";
@@ -20,6 +21,13 @@ const getRoutes = (t) => [
     path: "default",
     icon: <MdHome className="h-6 w-6" />,
     component: <Dashboard />,
+  },
+  {
+    name: t("category"),
+    layout: "/admin",
+    path: "categories",
+    icon: <MdCategory className="h-6 w-6" />,
+    component: <CategoryManagement />,
   },
   {
     name: t("income"),

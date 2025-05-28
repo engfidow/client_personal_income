@@ -72,5 +72,27 @@
 
   "recent_transactions": "Xisaabihii u Dambeeyey",
   "monthly_trend": "Dakhliga & Kharashaadka Bil kasta",
-  "category_breakdown": "Kharashka qaybaha"
+  "category_breakdown": "Kharashka qaybaha",
+
+   "select_category": "Doora Qayb",
+  "no_categories": "Qayb kama helin",
+  "please_register_category_first": "Fadlan marka hore qayb kusoo dar",
+  "loading": "Soo dajinaya",
+
+
+  "manage_categories": "Maaree Qaybaha",
+  "add_category": "Ku dar Qayb",
+  "edit_category": "Tafatir Qayb",
+  
+  "create": "Abuur",
+
+ 
+  "fetch_error": "Khalad ayaa ka dhacay helidda qaybaha",
+  "fill_required_fields": "Fadlan buuxi dhammaan meelaha loo baahan yahay",
+  "create_success": "Qayb si guul leh ayaa loo abuuray",
+  "update_success": "Qayb si guul leh ayaa loo cusbooneysiiyay",
+  "save_failed": "Qayb lama kaydin karin",
+  "delete_success": "Qayb waa la tirtiray",
+  "delete_failed": "Qayb lama tirtiri karin",
+  "confirm_delete": "Ma hubtaa inaad tirtirayso?"
 }

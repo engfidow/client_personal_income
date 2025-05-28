@@ -38,9 +38,10 @@ const Navbar = ({ onOpenSidenav, brandText }) => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("user");
-    navigate("/auth/login");
-  };
+  sessionStorage.clear();
+  window.dispatchEvent(new Event("storage")); // notify all listeners (like App.js)
+  navigate("/auth/login");
+};
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
