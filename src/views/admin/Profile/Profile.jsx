@@ -8,8 +8,10 @@ const Profile = () => {
   const [preview, setPreview] = useState(null);
   const [editing, setEditing] = useState(false);
   const [message, setMessage] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  // Fetch user info on mount
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -42,29 +44,51 @@ const Profile = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    const formData = new FormData();
-    if (form.name) formData.append("name", form.name);
-    if (form.email) formData.append("email", form.email);
-    if (form.password) formData.append("password", form.password);
-    if (form.image) formData.append("image", form.image);
+  const validateForm = () => {
+    const newErrors = {};
+    const nameRegex = /^[a-zA-Z\s]+$/;
 
-    try {
-      await axios.put(`https://server-personal-income.onrender.com/api/auth/${storedId}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      // Refetch updated user
-      const res = await axios.get(`https://server-personal-income.onrender.com/api/auth/me/${storedId}`);
-      setUser(res.data);
-      sessionStorage.setItem("user", JSON.stringify({ id: storedId }));
-      setEditing(false);
-      setMessage("Profile updated successfully");
-    } catch (err) {
-      console.error("Update failed:", err);
-      setMessage("Update failed");
+    if (!nameRegex.test(form.name.trim())) {
+      newErrors.name = "Name must contain only letters and spaces";
     }
+
+    if (form.password && form.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
+
+  const handleSubmit = async () => {
+  if (!validateForm()) return;
+
+  setLoading(true);
+  const formData = new FormData();
+  if (form.name) formData.append("name", form.name);
+  if (form.email) formData.append("email", form.email);
+  if (form.password) formData.append("password", form.password);
+  if (form.image) formData.append("image", form.image);
+
+  try {
+    await axios.put(`https://server-personal-income.onrender.com/api/auth/${storedId}`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    const res = await axios.get(`https://server-personal-income.onrender.com/api/auth/me/${storedId}`);
+    setUser(res.data);
+    sessionStorage.setItem("user", JSON.stringify({ id: storedId }));
+    setEditing(false);
+    setMessage("Profile updated successfully");
+    setErrors({});
+  } catch (err) {
+    console.error("Update failed:", err);
+    setMessage("Update failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   if (!user) {
     return <div className="p-6 text-navy-700 dark:text-white">Loading profile...</div>;
@@ -104,6 +128,7 @@ const Profile = () => {
             disabled={!editing}
             className="w-full p-2 rounded border dark:bg-navy-800 dark:border-white/20"
           />
+          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
         </div>
         <div>
           <label className="text-sm">Email</label>
@@ -127,6 +152,7 @@ const Profile = () => {
             className="w-full p-2 rounded border dark:bg-navy-800 dark:border-white/20"
             placeholder="Leave blank to keep current password"
           />
+          {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
         </div>
       </div>
 
@@ -134,23 +160,33 @@ const Profile = () => {
         {editing ? (
           <>
             <button
-              onClick={handleSubmit}
-              className="bg-green-600 text-white px-4 py-2 rounded"
-            >
-              Save
-            </button>
-            <button
-              onClick={() => setEditing(false)}
-              className="text-gray-600 dark:text-white/70 hover:underline"
-            >
+  onClick={handleSubmit}
+  className="bg-green-600 text-white px-4 py-2 rounded flex items-center justify-center"
+  disabled={loading}
+>
+  {loading ? (
+    <span className="flex items-center gap-2">
+      <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+        ></path>
+      </svg>
+      Saving...
+    </span>
+  ) : (
+    "Save"
+  )}
+</button>
+
+            <button onClick={() => setEditing(false)} className="text-gray-600 dark:text-white/70 hover:underline">
               Cancel
             </button>
           </>
         ) : (
-          <button
-            onClick={() => setEditing(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-          >
+          <button onClick={() => setEditing(true)} className="bg-blue-600 text-white px-4 py-2 rounded">
             Edit Profile
           </button>
         )}

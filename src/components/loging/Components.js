@@ -12,12 +12,10 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     width: 95%;
+    flex-direction: column;
+    display: flex;
     min-height: auto;
     margin-top: 40px;
-  }
-
-  @media (max-width: 480px) {
-    border-radius: 0;
   }
 `;
 
@@ -30,18 +28,18 @@ export const SignUpContainer = styled.div`
   width: 50%;
   opacity: 0;
   z-index: 1;
-  ${props =>
-    props.signinIn !== true &&
-    `
+
+  ${props => props.signinIn !== true && `
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
-  `};
+  `}
 
   @media (max-width: 768px) {
     position: relative;
     width: 100%;
-    transform: none !important;
+    display: ${props => props.signinIn !== true ? 'block' : 'none'};
+    transform: none;
     opacity: 1;
     z-index: 5;
   }
@@ -55,12 +53,14 @@ export const SignInContainer = styled.div`
   left: 0;
   width: 50%;
   z-index: 2;
-  ${props => props.signinIn !== true && `transform: translateX(100%);`};
+
+  ${props => props.signinIn !== true && `transform: translateX(100%);`}
 
   @media (max-width: 768px) {
     position: relative;
     width: 100%;
-    transform: none !important;
+    display: ${props => props.signinIn === true ? 'block' : 'none'};
+    transform: none;
   }
 `;
 
@@ -133,50 +133,76 @@ export const OverlayContainer = styled.div`
   overflow: hidden;
   transition: transform 0.6s ease-in-out;
   z-index: 100;
-  ${props => props.signinIn !== true && `transform: translateX(-100%);`};
+
+  ${props => props.signinIn !== true && `transform: translateX(-100%);`}
 
   @media (max-width: 768px) {
-    display: none;
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+    left: 0;
   }
 `;
 
 export const Overlay = styled.div`
   background: #D1F9BE;
   background-size: cover;
-  background-position: 0 0;
-  color: #ffffff;
+  background-position: center;
+  color: #000;
   position: relative;
   left: -100%;
   height: 100%;
   width: 200%;
   transform: translateX(0);
   transition: transform 0.6s ease-in-out;
+  display: flex;
+
   ${props => props.signinIn !== true && `transform: translateX(50%);`}
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    left: 0;
+    width: 100%;
+    transform: none !important;
+  }
 `;
 
 export const OverlayPanel = styled.div`
-  position: absolute;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: 0 40px;
+  padding: 20px 30px;
   text-align: center;
-  top: 0;
-  height: 100%;
   width: 50%;
+  height: 100%;
   transition: transform 0.6s ease-in-out;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    padding: 20px 15px;
+    display: none;
+  }
 `;
 
 export const LeftOverlayPanel = styled(OverlayPanel)`
   transform: translateX(-20%);
   ${props => props.signinIn !== true && `transform: translateX(0);`}
+
+  @media (max-width: 768px) {
+    display: ${props => props.signinIn === true ? 'none' : 'flex'};
+  }
 `;
 
 export const RightOverlayPanel = styled(OverlayPanel)`
-  right: 0;
   transform: translateX(0);
   ${props => props.signinIn !== true && `transform: translateX(20%);`}
+
+  @media (max-width: 768px) {
+    display: ${props => props.signinIn === false ? 'none' : 'flex'};
+  }
 `;
 
 export const Paragraph = styled.p`

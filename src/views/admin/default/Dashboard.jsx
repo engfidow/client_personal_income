@@ -40,11 +40,12 @@ const Dashboard = () => {
         `https://server-personal-income.onrender.com/api/transactions/dashboard/${userId}`
       );
       setData(res.data);
+      console.log(res.data.balance)
 
-      if (res.data.totalIncome < 50 && storedUser?.email) {
+      if (res.data.balance < 50 && storedUser?.email) {
         await axios.post("https://server-personal-income.onrender.com/api/notify-low-income", {
           email: storedUser.email,
-          income: res.data.totalIncome,
+          income: res.data.balance,
         });
       }
     } catch (err) {

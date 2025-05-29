@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import * as Components from './Components';
+import * as Components from "./Components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.png"; // 👈 use your logo image
+import logo from "../../assets/logo.png";
 
 function Login({ setUser }) {
   const navigate = useNavigate();
@@ -105,11 +105,8 @@ function Login({ setUser }) {
 
   return (
     <Components.Container>
-      
-
       <Components.SignUpContainer signinIn={signIn}>
         <Components.Form onSubmit={handleRegister}>
-          
           <Components.Title>Create Account</Components.Title>
 
           <Components.Input type="text" name="name" placeholder="Name" onChange={handleChange} />
@@ -153,7 +150,7 @@ function Login({ setUser }) {
       <Components.OverlayContainer signinIn={signIn}>
         <Components.Overlay signinIn={signIn}>
           <Components.LeftOverlayPanel signinIn={signIn}>
-            <img src={logo} alt="Logo" style={{ width: 150,  display: "block" }} />
+            <img src={logo} alt="Logo" style={{ width: 150, display: "block" }} />
             <Components.Title>Welcome Back!</Components.Title>
             <Components.Paragraph>
               To keep connected, please login with your personal info.
@@ -161,7 +158,7 @@ function Login({ setUser }) {
             <Components.GhostButton onClick={() => toggle(true)}>Sign In</Components.GhostButton>
           </Components.LeftOverlayPanel>
           <Components.RightOverlayPanel signinIn={signIn}>
-              <img src={logo} alt="Logo" style={{ width: 150,  display: "block" }} />
+            <img src={logo} alt="Logo" style={{ width: 150, display: "block" }} />
             <Components.Title>Hello!</Components.Title>
             <Components.Paragraph>
               Enter your personal details and start your journey with us.
